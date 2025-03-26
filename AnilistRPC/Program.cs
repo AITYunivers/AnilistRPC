@@ -12,6 +12,8 @@ namespace AnilistRPC
 {
     internal class Program
     {
+        public static Version Version => new Version(1, 1, 1);
+
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.

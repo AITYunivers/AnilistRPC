@@ -37,11 +37,19 @@ public partial class SearchResults : UserControl
             return;
 
         SearchResult item = (SearchResult)ResultsList.SelectedItem;
-        if (item.ResultMedia == MainWindow.Instance.AnimeSelected.CurrentMedia)
+        if (item.ResultMedia.Id == MainWindow.Instance.AnimeSelected.CurrentMedia?.Id)
+        {
+            ResultsList.SelectedItems?.Clear();
             return;
+        }
         MainWindow.Instance.AnimeSelected.SetMedia(item.ResultMedia, await SaveWrapper.GetMediaProgress(item.ResultMedia) + 1);
 
-        Results.Clear();
-        MainWindow.Instance.SearchBar.Clear();
+        if (!string.IsNullOrEmpty(MainWindow.Instance.SearchBar.Text))
+        {
+            Results.Clear();
+            MainWindow.Instance.SearchBar.Clear();
+        }
+        else
+            ResultsList.SelectedItems?.Clear();
     }
 }

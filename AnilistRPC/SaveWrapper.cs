@@ -118,6 +118,22 @@ namespace AnilistRPC
             Ini["Settings"]["Startup"] = startup.ToString();
         }
 
+        public static bool GetUpdatePopupPreference()
+        {
+            if (!Ini.Sections.ContainsSection("Settings") || !Ini["Settings"].ContainsKey("UpdatePopup"))
+                return true;
+
+            return Ini["Settings"]["UpdatePopup"] != Program.Version.ToString();
+        }
+
+        public static void SetUpdatePopupPreference(bool updatePopup)
+        {
+            if (updatePopup)
+                Ini["Settings"]["UpdatePopup"] = Program.Version.ToString();
+            else
+                Ini["Settings"].RemoveKey("UpdatePopup");
+        }
+
         public static void Save()
         {
             if (!Directory.Exists(Path.GetDirectoryName(GetPath())))

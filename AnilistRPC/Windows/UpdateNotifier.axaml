@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d"
+		Width="500"
+		Height="252"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaTitleBarHeightHint="25"
+        x:Class="AnilistRPC.UpdateNotifier"
+        Title="AnilistRPC - Update"
+		Icon="avares://AnilistRPC/Resources/ALRPCIcon.png">
+	<Window.Styles>
+		<Style Selector="Window[WindowState=Maximized]">
+			<Setter Property="Padding" Value="8" />
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_FullScreenButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_RestoreButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_MinimizeButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+	</Window.Styles>
+	<Grid RowDefinitions="25,*">
+		<Grid>
+			<Border BorderBrush="#10FFFFFF" BorderThickness="0,0,0,1" Grid.ColumnSpan="2"/>
+			<TextBlock Text="AnilistRPC - Update" Margin="5,0" VerticalAlignment="Center" Foreground="#80FFFFFF"/>
+		</Grid>
+		<Grid Grid.Row="1">
+			<TextBlock Text="There is a new version available:" Margin="5"/>
+			<Border BorderThickness="1" BorderBrush="#10FFFFFF" Background="#10000000" VerticalAlignment="Bottom" Margin="0,0,0,42" Width="490" Height="157" CornerRadius="5" ClipToBounds="True">
+				<ScrollViewer>
+					<Grid RowDefinitions="Auto,1,*">
+						<TextBlock x:Name="Version" Padding="5" Text="v1.1.1" FontWeight="Bold" FontSize="20"/>
+						<GridSplitter Grid.Row="1"/>
+						<StackPanel x:Name="Changelog" Grid.Row="2" Margin="5">
+							<TextBlock Text="Changelog:" FontWeight="Bold"/>
+						</StackPanel>
+					</Grid>
+				</ScrollViewer>
+			</Border>
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="5">
+				<Button Content="Update Now" Foreground="White" Margin="0" Click="OpenUpdateURL"/>
+				<Button Content="Maybe Later" Foreground="White" Margin="5,0" Click="MaybeLater"/>
+			</StackPanel>
+			<Button Content="Don't Show Again" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="DontShowAgain"/>
+		</Grid>
+	</Grid>
+</Window>

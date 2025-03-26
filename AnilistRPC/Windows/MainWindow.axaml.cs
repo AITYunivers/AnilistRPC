@@ -7,10 +7,12 @@ using Avalonia.Platform;
 using Avalonia.Threading;
 using DiscordRPC;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -42,6 +44,7 @@ namespace AnilistRPC
             _refreshTimer.Tick += RefreshRPC;
             _refreshTimer.Start();
 
+            CheckForUpdates();
             LoadAsync();
         }
 
@@ -50,6 +53,50 @@ namespace AnilistRPC
             await CheckAuthentication();
             await LoadCurrentMedia();
             await GetWatchingResults();
+        }
+
+        public async void CheckForUpdates()
+        {
+            if (!SaveWrapper.GetUpdatePopupPreference())
+                return;
+
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "C# Application"); // Need this or else Github won't accept our request
+            try
+            {
+                var response = await client.GetStringAsync("https://api.github.com/repos/AITYunivers/AnilistRPC/releases/latest");
+
+                using var document = JsonDocument.Parse(response);
+                var root = document.RootElement;
+
+                Version latestVer = Version.Parse(root.GetProperty("tag_name").GetString()!);
+                
+                if (latestVer > Program.Version)
+                {
+                    string url = root.GetProperty("html_url").GetString()!;
+                    string ver = latestVer.ToString();
+                    string[] body = root.GetProperty("body").GetString()!.Split("\r\n");
+                    List<string> changes = [];
+                    bool isChanges = false;
+                    for (int i = 0; i < body.Length; i++)
+                    {
+                        if (!isChanges && body[i].StartsWith("###"))
+                            isChanges = true;
+                        else if (isChanges && body[i].StartsWith("#"))
+                            break;
+                        else if (isChanges)
+                            changes.Add(body[i].Replace("\\", ""));
+                    }
+
+                    UpdateNotifier updateWindow = new UpdateNotifier();
+                    updateWindow.SetData(url, ver, changes.ToArray());
+                    await updateWindow.ShowDialog(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching release: {ex.Message}");
+            }
         }
 
         public async Task CheckAuthentication()

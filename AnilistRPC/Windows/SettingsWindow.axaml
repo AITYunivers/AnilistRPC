@@ -11,7 +11,7 @@
 		ExtendClientAreaToDecorationsHint="True"
 		ExtendClientAreaTitleBarHeightHint="25"
         x:Class="AnilistRPC.SettingsWindow"
-        Title="SettingsWindow"
+        Title="AnilistRPC - Settings"
 		Icon="avares://AnilistRPC/Resources/ALRPCIcon.png">
 	<Window.Styles>
 		<Style Selector="Window[WindowState=Maximized]">
