@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:i="https://github.com/projektanker/icons.avalonia"
+			 mc:Ignorable="d"
+			 d:DesignWidth="400"
+             x:Class="AnilistRPC.SearchResult">
+	<Grid ColumnDefinitions="50,*">
+		<Border BorderBrush="#10FFFFFF" BorderThickness="0,1,0,0" Grid.ColumnSpan="2"/>
+		<Border x:Name="ImageBorder" Background="#10FFFFFF" Width="45" Height="45" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5" CornerRadius="4" ClipToBounds="True">
+			<i:Icon Foreground="#50FFFFFF" Value="mdi-image-sync-outline" FontSize="30" />
+		</Border>
+		<Grid Grid.Column="1" Margin="4,5,5,5">
+			<StackPanel VerticalAlignment="Center">
+				<TextBlock x:Name="AnimeName" Text="Anime Name" Foreground="#80FFFFFF"/>
+				<TextBlock x:Name="Description" Text="2025 TV" Foreground="#50FFFFFF" FontSize="12"/>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</UserControl>

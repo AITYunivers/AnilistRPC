@@ -7,8 +7,20 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\ALRPCIcon.png" />
+    <None Remove="Resources\Auth.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Resources\ALRPCIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Auth.html" />
+  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AniListNet" Version="1.7.0" />
+    <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.3.0" />
     <PackageReference Include="Avalonia" Version="11.2.5" />
     <PackageReference Include="Avalonia.Desktop" Version="11.2.5" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
@@ -18,5 +30,13 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="ini-parser" Version="2.5.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="Projektanker.Icons.Avalonia.MaterialDesign" Version="9.6.1" />
+	  <PackageReference Include="Semi.Avalonia" Version="11.2.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\discord-rpc-csharp\DiscordRPC\DiscordRPC.csproj" />
   </ItemGroup>
 </Project>

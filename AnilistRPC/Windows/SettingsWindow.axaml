@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		Width="450"
+		Height="250"
+		MinWidth="450"
+		MinHeight="250"
+		WindowStartupLocation="CenterOwner"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaTitleBarHeightHint="25"
+        x:Class="AnilistRPC.SettingsWindow"
+        Title="SettingsWindow"
+		Icon="avares://AnilistRPC/Resources/ALRPCIcon.png">
+	<Window.Styles>
+		<Style Selector="Window[WindowState=Maximized]">
+			<Setter Property="Padding" Value="8" />
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_FullScreenButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_RestoreButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_MinimizeButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+	</Window.Styles>
+	<Grid RowDefinitions="25,*">
+		<Grid>
+			<Border BorderBrush="#10FFFFFF" BorderThickness="0,0,0,1" Grid.ColumnSpan="2"/>
+			<TextBlock Text="AnilistRPC - Settings" Margin="5,0" VerticalAlignment="Center" Foreground="#80FFFFFF"/>
+		</Grid>
+		<ScrollViewer Grid.Row="1">
+			<Grid RowDefinitions="*,Auto">
+				<StackPanel>
+					<Border BorderBrush="#20FFFFFF" BorderThickness="0,0,0,1">
+						<Panel x:Name="AuthSettings" Margin="8,5">
+							<TextBlock x:Name="AuthStatus" VerticalAlignment="Center" Text="You are currently not signed into Anilist"/>
+							<Button x:Name="AuthButton" Content="Sign In" HorizontalAlignment="Right" Foreground="White" Click="SignInOut"/>
+						</Panel>
+					</Border>
+				</StackPanel>
+				<Border Grid.Row="1" Background="#20000000" BorderBrush="#20FFFFFF" BorderThickness="0,1,0,0">
+					<TextBlock Padding="5" TextAlignment="Center">
+						<InlineUIContainer>
+							<HyperlinkButton Content="Github" NavigateUri="https://github.com/AITYunivers/AnilistRPC" IsVisited="False"/>
+						</InlineUIContainer>
+						<Run Text="|"/>
+						<InlineUIContainer>
+							<HyperlinkButton Content="Discord" NavigateUri="https://discord.gg/aY2WFGPBBB" IsVisited="False"/>
+						</InlineUIContainer>
+					</TextBlock>
+				</Border>
+			</Grid>
+		</ScrollViewer>
+	</Grid>
+</Window>

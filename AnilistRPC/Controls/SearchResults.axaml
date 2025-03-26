@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:this="using:AnilistRPC"
+			 mc:Ignorable="d"
+			 d:DesignWidth="400"
+			 d:DesignHeight="332"
+             x:Class="AnilistRPC.SearchResults">
+	<ScrollViewer>
+		<ListBox x:Name="ResultsList" DoubleTapped="ResultFullSelected">
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+					<Setter Property="Padding" Value="0"/>
+				</Style>
+			</ListBox.Styles>
+			<this:SearchResult/>
+			<this:SearchResult/>
+			<this:SearchResult/>
+			<this:SearchResult/>
+			<this:SearchResult/>
+			<this:SearchResult/>
+			<this:SearchResult/>
+			<this:SearchResult/>
+		</ListBox>
+	</ScrollViewer>
+</UserControl>

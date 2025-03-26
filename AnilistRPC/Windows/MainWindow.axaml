@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="https://github.com/projektanker/icons.avalonia"
+		xmlns:this="using:AnilistRPC"
+		mc:Ignorable="d"
+		Width="400"
+		Height="500"
+		WindowStartupLocation="CenterScreen"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaTitleBarHeightHint="25"
+        x:Class="AnilistRPC.MainWindow"
+        Title="AnilistRPC"
+		Icon="avares://AnilistRPC/Resources/ALRPCIcon.png">
+	<Window.Styles>
+		<Style Selector="Window[WindowState=Maximized]">
+			<Setter Property="Padding" Value="8" />
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_FullScreenButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+		<Style Selector="CaptionButtons /template/ Button#PART_RestoreButton">
+			<Setter Property="IsVisible" Value="False"/>
+		</Style>
+	</Window.Styles>
+	<Grid RowDefinitions="25,42,*">
+		<Grid>
+			<Border BorderBrush="#10FFFFFF" BorderThickness="0,0,0,1" Grid.ColumnSpan="2"/>
+			<TextBlock Text="AnilistRPC" Margin="5,0" VerticalAlignment="Center" Foreground="#80FFFFFF"/>
+		</Grid>
+		<Grid Grid.Row="1" ColumnDefinitions="*,38">
+			<TextBox x:Name="SearchBar" VerticalAlignment="Top" Margin="5" Watermark="Search Anilist..." TextChanged="SearchChanged"/>
+			<Button i:Attached.Icon="mdi-cog" Foreground="White" FontSize="18" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,5,5,5" Grid.Column="1" Click="OpenSettings"/>
+		</Grid>
+		<DockPanel Grid.Row="2">
+			<this:AnimeSelected DockPanel.Dock="Bottom" x:Name="AnimeSelected"/>
+			<this:SearchResults DockPanel.Dock="Top" x:Name="SearchResults"/>
+		</DockPanel>
+	</Grid>
+</Window>

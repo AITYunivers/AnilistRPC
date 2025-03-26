@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AniList Authentication</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #252526;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #007acc;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+            .button:hover {
+                background-color: #005f9e;
+            }
+
+        .error {
+            color: #ff4b4b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AniList Authentication</h1>
+        <p id="message">Processing your authentication...</p>
+        <a href="#" class="button" id="close-button" style="display: none;">Close this window</a>
+        <p class="error" id="error-message" style="display: none;"></p>
+    </div>
+
+    <script>
+        // Extract the access token from the URL fragment
+        const fragment = window.location.hash.substring(1);
+        const params = new URLSearchParams(fragment);
+        const accessToken = params.get('access_token');
+        const tokenType = params.get('token_type');
+        const expire = params.get('expires_in');
+
+        const messageEl = document.getElementById('message');
+        const errorMessageEl = document.getElementById('error-message');
+        const closeButtonEl = document.getElementById('close-button');
+
+        if (accessToken) {
+            // Send the access token to the server via POST
+            fetch('/callback/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ access_token: accessToken, token_type: tokenType, expires_in: expire })
+            }).then(() => {
+                messageEl.textContent = 'Authentication successful! You can now close this window.';
+                closeButtonEl.style.display = 'inline-block';
+            }).catch(err => {
+                messageEl.textContent = '';
+                errorMessageEl.textContent = 'An error occurred: ' + err.message;
+                errorMessageEl.style.display = 'block';
+            });
+        } else {
+            messageEl.textContent = '';
+            errorMessageEl.textContent = 'No access token found in the URL.';
+            errorMessageEl.style.display = 'block';
+        }
+
+        // Allow closing the window
+        closeButtonEl.addEventListener('click', () => {
+            window.close();
+        });
+    </script>
+</body>
+</html>

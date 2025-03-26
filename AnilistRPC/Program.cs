@@ -1,5 +1,8 @@
 ﻿using System;
 using Avalonia;
+using Projektanker.Icons.Avalonia.MaterialDesign;
+using Projektanker.Icons.Avalonia;
+using Avalonia.Media;
 
 namespace AnilistRPC
 {
@@ -14,9 +17,17 @@ namespace AnilistRPC
 
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
+        {
+            IconProvider.Current.Register<MaterialDesignIconProvider>();
+            return AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont()
                 .LogToTrace();
+        }
+    }
+
+    public static class Extensions
+    {
+        public static Color ToAvalonia(this System.Drawing.Color color) => new(color.A, color.R, color.G, color.B);
     }
 }

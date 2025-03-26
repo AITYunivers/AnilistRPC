@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="https://github.com/projektanker/icons.avalonia"
+			 mc:Ignorable="d"
+			 d:DesignWidth="400"
+			 Height="77"
+             x:Class="AnilistRPC.AnimeSelected">
+	<Border Background="#151518" BorderBrush="#10FFFFFF" BorderThickness="0,2,0,0" CornerRadius="8" ClipToBounds="True">
+		<Border.Effect>
+			<DropShadowDirectionEffect BlurRadius="10" Direction="0" Color="#000000" Opacity="0.75"/>
+		</Border.Effect>
+		<Grid ColumnDefinitions="76,*">
+			<Border x:Name="ImageBorder" Background="#10FFFFFF" Width="65" Height="65" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5" CornerRadius="6" ClipToBounds="True">
+				<!--Border.Effect>
+					<DropShadowDirectionEffect BlurRadius="6" Direction="0" Color="#f2f25f" Opacity="1"/>
+				</Border.Effect-->
+				<i:Icon Foreground="#50FFFFFF" Value="mdi-image-sync-outline" FontSize="30"/>
+			</Border>
+			<Grid Grid.Column="1" Margin="4,5,5,5">
+				<Viewbox Height="40" VerticalAlignment="Top" HorizontalAlignment="Left">
+					<TextBlock x:Name="AnimeName" MinHeight="30" Text="Girls Band Cry" Foreground="#D0FFFFFF" FontSize="15"/>
+				</Viewbox>
+				<StackPanel x:Name="EpisodeStackPanel" VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
+					<TextBox x:Name="CurEpisode" Watermark="Ep" Text="13" Background="#10FFFFFF" Foreground="#80FFFFFF" Padding="3,1" MinHeight="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" TextChanged="EpisodeCountChanged" PointerWheelChanged="ScrollEpisodeCount"/>
+					<TextBlock x:Name="EpisodeCount" Text="/ 13 Episodes" Foreground="#80FFFFFF" Margin="5,1,0,1" VerticalAlignment="Center"/>
+				</StackPanel>
+				<Button x:Name="WebpageButton" i:Attached.Icon="mdi-web" Foreground="White" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="5" MinHeight="0" Click="OpenURL"/>
+			</Grid>
+		</Grid>
+	</Border>
+</UserControl>
