@@ -41,6 +41,18 @@
 							<Button x:Name="AuthButton" Content="Sign In" HorizontalAlignment="Right" Foreground="White" Click="SignInOut"/>
 						</Panel>
 					</Border>
+					<Border BorderBrush="#20FFFFFF" BorderThickness="0,0,0,1">
+						<Panel x:Name="TraySetting" Margin="8,5">
+							<TextBlock x:Name="TrayDescription" VerticalAlignment="Center" Text="Minimize to tray"/>
+							<CheckBox x:Name="TrayCheckbox" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleMinimizeTray"/>
+						</Panel>
+					</Border>
+					<Border BorderBrush="#20FFFFFF" BorderThickness="0,0,0,1">
+						<Panel x:Name="StartupSetting" Margin="8,5" ToolTip.Tip="If Minimize to tray is enabled, the app will launch already minimized to tray when launching at startup.">
+							<TextBlock x:Name="StartupDescription" VerticalAlignment="Center" Text="Launch at startup"/>
+							<CheckBox x:Name="StartupCheckbox" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleStartup"/>
+						</Panel>
+					</Border>
 				</StackPanel>
 				<Border Grid.Row="1" Background="#20000000" BorderBrush="#20FFFFFF" BorderThickness="0,1,0,0">
 					<TextBlock Padding="5" TextAlignment="Center">

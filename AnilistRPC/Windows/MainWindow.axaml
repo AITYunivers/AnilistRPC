@@ -9,7 +9,9 @@
 		Height="500"
 		WindowStartupLocation="CenterScreen"
 		ExtendClientAreaToDecorationsHint="True"
-		ExtendClientAreaTitleBarHeightHint="25"
+		ExtendClientAreaTitleBarHeightHint="25" 
+		PropertyChanged="WindowPropertyChanged"
+		Closed="WindowClosed"
         x:Class="AnilistRPC.MainWindow"
         Title="AnilistRPC"
 		Icon="avares://AnilistRPC/Resources/ALRPCIcon.png">

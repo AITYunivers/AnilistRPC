@@ -92,6 +92,32 @@ namespace AnilistRPC
             Save();
         }
 
+        public static bool GetMinimizeTraySetting()
+        {
+            if (!Ini.Sections.ContainsSection("Settings") || !Ini["Settings"].ContainsKey("MinimizeTray"))
+                return true;
+
+            return bool.Parse(Ini["Settings"]["MinimizeTray"]);
+        }
+
+        public static void SetMinimizeTraySetting(bool minimizeTray)
+        {
+            Ini["Settings"]["MinimizeTray"] = minimizeTray.ToString();
+        }
+
+        public static bool GetStartupSetting()
+        {
+            if (!Ini.Sections.ContainsSection("Settings") || !Ini["Settings"].ContainsKey("Startup"))
+                return false; // Too intrusive to default to true imo
+
+            return bool.Parse(Ini["Settings"]["Startup"]);
+        }
+
+        public static void SetStartupSetting(bool startup)
+        {
+            Ini["Settings"]["Startup"] = startup.ToString();
+        }
+
         public static void Save()
         {
             if (!Directory.Exists(Path.GetDirectoryName(GetPath())))

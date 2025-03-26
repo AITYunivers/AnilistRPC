@@ -34,6 +34,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="Projektanker.Icons.Avalonia.MaterialDesign" Version="9.6.1" />
 	  <PackageReference Include="Semi.Avalonia" Version="11.2.1.5" />
+	  <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

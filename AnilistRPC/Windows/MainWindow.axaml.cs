@@ -9,6 +9,7 @@ using DiscordRPC;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -32,6 +33,9 @@ namespace AnilistRPC
         {
             Instance = this;
             InitializeComponent();
+
+            if (Design.IsDesignMode)
+                return;
 
             _refreshTimer = new DispatcherTimer();
             _refreshTimer.Interval = TimeSpan.FromSeconds(20);
@@ -187,6 +191,27 @@ namespace AnilistRPC
         {
             SettingsWindow settings = new SettingsWindow();
             settings.ShowDialog(this);
+        }
+
+        private void WindowPropertyChanged(object? sender, Avalonia.AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.Property == Window.WindowStateProperty && SaveWrapper.GetMinimizeTraySetting())
+            {
+                if (WindowState == WindowState.Minimized)
+                    Hide();
+
+                TrayIcons? iconsList = TrayIcon.GetIcons(Application.Current!);
+                if (iconsList != null && iconsList.Count > 0)
+                {
+                    TrayIcon icon = iconsList[0];
+                    icon.IsVisible = WindowState == WindowState.Minimized;
+                }
+            }
+        }
+
+        private void WindowClosed(object? sender, System.EventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

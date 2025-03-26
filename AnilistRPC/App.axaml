@@ -8,4 +8,13 @@
     <Application.Styles>
 		<semi:SemiTheme Locale="en-us"/>
     </Application.Styles>
+
+	<TrayIcon.Icons>
+		<TrayIcons>
+			<TrayIcon Icon="avares://AnilistRPC/Resources/ALRPCIcon.png"
+					  ToolTipText="AnilistRPC"
+					  IsVisible="False"
+					  Clicked="TrayIconClicked"/>
+		</TrayIcons>
+	</TrayIcon.Icons>
 </Application>

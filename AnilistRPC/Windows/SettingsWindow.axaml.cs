@@ -9,6 +9,8 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Interactivity;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace AnilistRPC;
 
@@ -19,6 +21,7 @@ public partial class SettingsWindow : Window
         InitializeComponent();
 
         CheckAuthentication();
+        TrayCheckbox.IsChecked = SaveWrapper.GetMinimizeTraySetting();
     }
 
     private void CheckAuthentication()
@@ -124,6 +127,37 @@ public partial class SettingsWindow : Window
 
             using (var reader = new StreamReader(stream))
                 return reader.ReadToEnd();
+        }
+    }
+
+    private void ToggleMinimizeTray(object? sender, RoutedEventArgs e)
+    {
+        SaveWrapper.SetMinimizeTraySetting(TrayCheckbox.IsChecked ?? false);
+    }
+
+    private void ToggleStartup(object? sender, RoutedEventArgs e)
+    {
+        SaveWrapper.SetMinimizeTraySetting(StartupCheckbox.IsChecked ?? false);
+
+        string shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "AnilistRPC.lnk");
+        if (StartupCheckbox.IsChecked == true)
+        {
+            if (File.Exists(shortcutPath))
+                return;
+
+            ProcessModule? processModule = Process.GetCurrentProcess().MainModule;
+            IShellLink shortcut = (IShellLink)new ShellLink();
+            shortcut.SetPath(processModule?.FileName ?? Path.Combine(Directory.GetCurrentDirectory(), "AnilistRPC.exe"));
+            shortcut.SetWorkingDirectory(Directory.GetCurrentDirectory());
+            shortcut.SetDescription("AnilistRPC Shortcut, defaults to tray if setting is enabled");
+            shortcut.SetArguments("--tray");
+
+            IPersistFile file = (IPersistFile)shortcut;
+            file.Save(shortcutPath, false);
+        }
+        else if (File.Exists(shortcutPath))
+        {
+            File.Delete(shortcutPath);
         }
     }
 }
