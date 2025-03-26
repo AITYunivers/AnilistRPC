@@ -29,8 +29,8 @@ AnilistRPC is a Discord Rich Presence (RPC) integration for Anilist. With authen
 
 ## Screenshots
 <div style="display: flex; justify-content: center; gap: 10px;">
-  <img src="https://i.imgur.com/APYYW7J.png" alt="Screenshot of application" height="600">
-  <img src="https://i.imgur.com/znjBttk.png" alt="Screenshot of Rich Presence" height="600">
+  <img src="https://i.imgur.com/APYYW7J.png" alt="Screenshot of application" height="400">
+  <img src="https://i.imgur.com/znjBttk.png" alt="Screenshot of Rich Presence" height="400">
 </div>
 
 ---
