@@ -42,8 +42,8 @@ public partial class AnimeSelected : UserControl
         {
             if (int.TryParse(CurEpisode.Text, out int episode))
             {
-                episode = Math.Clamp(episode - 1, 0, CurrentMedia.Episodes ?? int.MaxValue);
-                SaveWrapper.SetMediaProgress(CurrentMedia, episode, true);
+                episode = Math.Clamp(episode, 1, CurrentMedia.Episodes ?? int.MaxValue);
+                SaveWrapper.SetMediaProgress(CurrentMedia, episode - 1, true);
                 _oldEpisode = episode;
                 MainWindow.UpdateRichPresence(CurrentMedia, episode);
             }
