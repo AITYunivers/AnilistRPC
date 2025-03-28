@@ -35,6 +35,7 @@ namespace AnilistRPC
         {
             Instance = this;
             InitializeComponent();
+            PlatformSpecific();
 
             if (Design.IsDesignMode)
                 return;
@@ -46,6 +47,18 @@ namespace AnilistRPC
 
             CheckForUpdates();
             LoadAsync();
+        }
+
+        public void PlatformSpecific()
+        {
+            if (OperatingSystem.IsLinux())
+            {
+                MainGrid.RowDefinitions[0].Height = new GridLength(0);
+                MenuBar.IsVisible = false;
+
+                // Possibly temporary? Avalonia doesn't support tray icons on Linux yet
+                SaveWrapper.SetMinimizeTraySetting(false);
+            }
         }
 
         public async void LoadAsync()

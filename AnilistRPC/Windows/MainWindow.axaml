@@ -26,8 +26,8 @@
 			<Setter Property="IsVisible" Value="False"/>
 		</Style>
 	</Window.Styles>
-	<Grid RowDefinitions="25,42,*">
-		<Grid>
+	<Grid x:Name="MainGrid" RowDefinitions="25,42,*">
+		<Grid x:Name="MenuBar">
 			<Border BorderBrush="#10FFFFFF" BorderThickness="0,0,0,1" Grid.ColumnSpan="2"/>
 			<TextBlock Text="AnilistRPC" Margin="5,0" VerticalAlignment="Center" Foreground="#80FFFFFF"/>
 		</Grid>

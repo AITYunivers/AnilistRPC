@@ -19,9 +19,20 @@ public partial class SettingsWindow : Window
     public SettingsWindow()
     {
         InitializeComponent();
+        PlatformSpecific();
 
         CheckAuthentication();
         TrayCheckbox.IsChecked = SaveWrapper.GetMinimizeTraySetting();
+        StartupCheckbox.IsChecked = SaveWrapper.GetStartupSetting();
+    }
+
+    public void PlatformSpecific()
+    {
+        if (OperatingSystem.IsLinux())
+        {
+            // Avalonia doesn't support tray icons on Linux
+            ((Border)TraySetting.Parent!).IsVisible = false;
+        }
     }
 
     private void CheckAuthentication()
@@ -139,21 +150,38 @@ public partial class SettingsWindow : Window
     {
         SaveWrapper.SetMinimizeTraySetting(StartupCheckbox.IsChecked ?? false);
 
-        string shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "AnilistRPC.lnk");
+        string shortcutPath = string.Empty;
+        if (OperatingSystem.IsWindows())
+            shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "AnilistRPC.lnk");
+        else if (OperatingSystem.IsLinux())
+            shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "autostart", "AnilistRPC.desktop");
+
         if (StartupCheckbox.IsChecked == true)
         {
             if (File.Exists(shortcutPath))
                 return;
 
-            ProcessModule? processModule = Process.GetCurrentProcess().MainModule;
-            IShellLink shortcut = (IShellLink)new ShellLink();
-            shortcut.SetPath(processModule?.FileName ?? Path.Combine(Directory.GetCurrentDirectory(), "AnilistRPC.exe"));
-            shortcut.SetWorkingDirectory(Directory.GetCurrentDirectory());
-            shortcut.SetDescription("AnilistRPC Shortcut, defaults to tray if setting is enabled");
-            shortcut.SetArguments("--tray");
+            if (OperatingSystem.IsWindows())
+            {
+                ProcessModule? processModule = Process.GetCurrentProcess().MainModule;
+                IShellLink shortcut = (IShellLink)new ShellLink();
+                shortcut.SetPath(processModule?.FileName ?? Path.Combine(Directory.GetCurrentDirectory(), "AnilistRPC.exe"));
+                shortcut.SetWorkingDirectory(Directory.GetCurrentDirectory());
+                shortcut.SetDescription("AnilistRPC Shortcut, defaults to tray if setting is enabled");
+                shortcut.SetArguments("--tray");
 
-            IPersistFile file = (IPersistFile)shortcut;
-            file.Save(shortcutPath, false);
+                IPersistFile file = (IPersistFile)shortcut;
+                file.Save(shortcutPath, false);
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                StreamWriter writer = new StreamWriter(shortcutPath);
+                writer.WriteLine("[Desktop Entry]");
+                writer.WriteLine("Type=Application");
+                writer.WriteLine("Name=AnilistRPC");
+                writer.WriteLine("Exec=exec \"" + Path.Combine(Directory.GetCurrentDirectory(), "AnilistRPC") + "\"");
+                writer.Dispose();
+            }
         }
         else if (File.Exists(shortcutPath))
         {
