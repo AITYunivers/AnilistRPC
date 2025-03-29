@@ -6,8 +6,10 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	<ApplicationIcon>Resources\ALRPCIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\ALRPCIcon.ico" />
     <None Remove="Resources\ALRPCIcon.png" />
     <None Remove="Resources\Auth.html" />
   </ItemGroup>
