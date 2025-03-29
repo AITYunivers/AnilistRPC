@@ -28,6 +28,8 @@ namespace AnilistRPC
                 else
                     desktop.MainWindow = new MainWindow();
                 desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+                Master.Startup();
             }
 
             base.OnFrameworkInitializationCompleted();

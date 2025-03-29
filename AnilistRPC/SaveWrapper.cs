@@ -28,7 +28,7 @@ namespace AnilistRPC
                 return null;
             }
             episode = int.Parse(Ini["CurrentMedia"]["Episode"]);
-            return MainWindow.Anilist.GetMediaAsync(int.Parse(Ini["CurrentMedia"]["Id"]));
+            return Master.Anilist.GetMediaAsync(int.Parse(Ini["CurrentMedia"]["Id"]));
         }
 
         public static void SetCurrentMedia(Media media, int episode)
@@ -40,9 +40,9 @@ namespace AnilistRPC
 
         public static async Task<int> GetMediaProgress(Media media)
         {
-            if (MainWindow.AuthenticationUser != null)
+            if (Master.AuthenticationUser != null)
             {
-                MediaEntry? entry = await MainWindow.Anilist.GetMediaEntryAsync(media.Id);
+                MediaEntry? entry = await Master.Anilist.GetMediaEntryAsync(media.Id);
                 if (entry != null)
                 {
                     SetMediaProgress(media, entry.Progress);
@@ -61,8 +61,8 @@ namespace AnilistRPC
             Ini["MediaProgress"][media.Id.ToString()] = episode.ToString();
             Save();
 
-            if (saveToAnilist && MainWindow.AuthenticationUser != null)
-                MainWindow.Anilist.SaveMediaEntryAsync(media.Id, new MediaEntryMutation() { Progress = episode });
+            if (saveToAnilist && Master.AuthenticationUser != null)
+                Master.Anilist.SaveMediaEntryAsync(media.Id, new MediaEntryMutation() { Progress = episode });
         }
 
         public static void WriteAuthenticationData(AuthenticationData data)

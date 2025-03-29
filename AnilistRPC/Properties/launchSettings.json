@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AnilistRPC": {
+      "commandName": "Project",
+      "commandLineArgs": "--tray"
+    }
+  }
+}

@@ -30,6 +30,9 @@ public partial class SettingsWindow : Window
     {
         if (OperatingSystem.IsLinux())
         {
+            MainGrid.RowDefinitions[0].Height = new GridLength(0);
+            MenuBar.IsVisible = false;
+
             // Avalonia doesn't support tray icons on Linux
             ((Border)TraySetting.Parent!).IsVisible = false;
         }
@@ -37,28 +40,28 @@ public partial class SettingsWindow : Window
 
     private void CheckAuthentication()
     {
-        if (MainWindow.AuthenticationUser == null)
+        if (Master.AuthenticationUser == null)
         {
             AuthStatus.Text = "You are currently not signed into Anilist";
             AuthButton.Content = "Sign In";
         }
         else
         {
-            AuthStatus.Text = $"Signed in as {MainWindow.AuthenticationUser.Name}";
+            AuthStatus.Text = $"Signed in as {Master.AuthenticationUser.Name}";
             AuthButton.Content = "Sign Out";
         }
     }
 
     private async void SignInOut(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (MainWindow.AuthenticationUser == null)
+        if (Master.AuthenticationUser == null)
         {
             if (await SetupAuthentication())
                 CheckAuthentication();
         }
         else
         {
-            MainWindow.AuthenticationUser = null;
+            Master.AuthenticationUser = null;
             SaveWrapper.ClearAuthenticationData();
             CheckAuthentication();
         }
@@ -70,7 +73,7 @@ public partial class SettingsWindow : Window
         if (!await Authenticate(authData))
             return false;
 
-        MainWindow.AuthenticationUser = await MainWindow.Anilist.GetAuthenticatedUserAsync();
+        Master.AuthenticationUser = await Master.Anilist.GetAuthenticatedUserAsync();
         SaveWrapper.WriteAuthenticationData(authData);
 
         return true;
@@ -119,7 +122,7 @@ public partial class SettingsWindow : Window
             }
         }
 
-        return await MainWindow.TryAuthenticate(authData);
+        return await Master.TryAuthenticate(authData);
     }
 
     private static string? ParsePropertyFromJson(string json, string property)

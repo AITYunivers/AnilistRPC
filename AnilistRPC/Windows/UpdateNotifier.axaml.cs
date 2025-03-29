@@ -13,6 +13,16 @@ public partial class UpdateNotifier : Window
     public UpdateNotifier()
     {
         InitializeComponent();
+        PlatformSpecific();
+    }
+
+    public void PlatformSpecific()
+    {
+        if (OperatingSystem.IsLinux())
+        {
+            MainGrid.RowDefinitions[0].Height = new GridLength(0);
+            MenuBar.IsVisible = false;
+        }
     }
 
     public void SetData(string url, string version, string[] changes)
