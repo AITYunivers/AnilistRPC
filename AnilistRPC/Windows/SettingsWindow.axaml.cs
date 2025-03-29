@@ -148,7 +148,7 @@ public partial class SettingsWindow : Window
 
     private void ToggleStartup(object? sender, RoutedEventArgs e)
     {
-        SaveWrapper.SetMinimizeTraySetting(StartupCheckbox.IsChecked ?? false);
+        SaveWrapper.SetStartupSetting(StartupCheckbox.IsChecked ?? false);
 
         string shortcutPath = string.Empty;
         if (OperatingSystem.IsWindows())
