@@ -3,6 +3,7 @@ using AniListNet.Objects;
 using AniListNet.Parameters;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -125,10 +126,22 @@ namespace AnilistRPC
                         Status = MediaEntryStatus.Current,
                         Type = MediaType.Anime
                     });
+                Task<AniPagination<MediaEntry>>? CurrentRewatchingTask =
+                    Master.Anilist.GetUserEntriesAsync(Master.AuthenticationUser.Id,
+                    new MediaEntryFilter()
+                    {
+                        Status = MediaEntryStatus.Repeating,
+                        Type = MediaType.Anime
+                    });
                 _currentSearchTask = CurrentWatchingTask;
                 await CurrentWatchingTask;
                 if (CurrentWatchingTask == _currentSearchTask)
-                    SearchResults.SetWatchingResults(CurrentWatchingTask.Result);
+                {
+                    _currentSearchTask = CurrentRewatchingTask;
+                    await CurrentRewatchingTask;
+                    if (CurrentRewatchingTask == _currentSearchTask)
+                        SearchResults.SetWatchingResults(CurrentWatchingTask.Result, CurrentRewatchingTask.Result);
+                }
             }
         }
 
@@ -157,6 +170,11 @@ namespace AnilistRPC
         private void WindowClosed(object? sender, System.EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void WindowFocused(object? sender, GotFocusEventArgs e)
+        {
+            //GetWatchingResults();
         }
     }
 }

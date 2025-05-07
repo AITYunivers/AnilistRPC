@@ -24,10 +24,12 @@ public partial class SearchResults : UserControl
             Results.Add(new SearchResult(media));
     }
 
-    public void SetWatchingResults(AniPagination<MediaEntry> results)
+    public void SetWatchingResults(AniPagination<MediaEntry> watching, AniPagination<MediaEntry> rewatching)
     {
         Results.Clear();
-        foreach (MediaEntry mediaEntry in results.Data)
+        foreach (MediaEntry mediaEntry in watching.Data)
+            Results.Add(new SearchResult(mediaEntry.Media));
+        foreach (MediaEntry mediaEntry in rewatching.Data)
             Results.Add(new SearchResult(mediaEntry.Media));
     }
 

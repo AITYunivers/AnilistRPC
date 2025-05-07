@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using System;
 
 namespace AnilistRPC
 {
@@ -35,8 +36,13 @@ namespace AnilistRPC
             base.OnFrameworkInitializationCompleted();
         }
 
+        private DateTime? trayIconDebounce;
+
         private void TrayIconClicked(object? sender, System.EventArgs e)
         {
+            if (trayIconDebounce.HasValue && DateTime.UtcNow.TimeOfDay.TotalMilliseconds - trayIconDebounce.Value.TimeOfDay.TotalMilliseconds < 500)
+                return;
+            trayIconDebounce = DateTime.UtcNow;
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 if (desktop.MainWindow != null)

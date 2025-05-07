@@ -12,6 +12,7 @@
 		ExtendClientAreaTitleBarHeightHint="25" 
 		PropertyChanged="WindowPropertyChanged"
 		Closed="WindowClosed"
+		GotFocus="WindowFocused"
         x:Class="AnilistRPC.MainWindow"
         Title="AnilistRPC"
 		Icon="avares://AnilistRPC/Resources/ALRPCIcon.png">
