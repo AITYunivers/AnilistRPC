@@ -174,7 +174,15 @@ namespace AnilistRPC
 
         private void WindowFocused(object? sender, GotFocusEventArgs e)
         {
-            //GetWatchingResults();
+            // Hasn't ever crashed for me, it's just that it'd be annoying if it did.
+            try
+            {
+                GetWatchingResults();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

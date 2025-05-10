@@ -40,7 +40,7 @@ namespace AnilistRPC
 
         private void TrayIconClicked(object? sender, System.EventArgs e)
         {
-            if (trayIconDebounce.HasValue && DateTime.UtcNow.TimeOfDay.TotalMilliseconds - trayIconDebounce.Value.TimeOfDay.TotalMilliseconds < 500)
+            if (trayIconDebounce.HasValue && DateTime.UtcNow.Day == trayIconDebounce.Value.Day && DateTime.UtcNow.TimeOfDay.TotalMilliseconds - trayIconDebounce.Value.TimeOfDay.TotalMilliseconds < 500)
                 return;
             trayIconDebounce = DateTime.UtcNow;
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
